@@ -110,6 +110,19 @@ def home():
 def add_info():
     return render_template("add_info.html")
 
+@app.route("/back")
+def back():
+    return render_template("home.html")
+
+@app.route("/image_upload")
+def image_upload():
+    return render_template("image_upload.html")
+
+# @app.route("/dashboard")
+# def dashboard():
+#     return render_template("attendance.html")
+
+
 
 @app.route("/teacher_login", methods=["GET", "POST"])
 def teacher_login():

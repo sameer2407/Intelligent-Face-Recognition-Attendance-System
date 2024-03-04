@@ -1,66 +1,201 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Select Class</title>
+  <head>
+    <title>Select Department</title>
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+      * {
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background-image: url("../static/images/admin_bg.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      form {
+        width: 310px;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.1),
+          rgba(255, 255, 255, 0)
+        );
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+      form span {
+        color: white;
+        font-size: 30px;
+        font-weight: 700;
+      }
+      select,
+      input[type="submit"] {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        border-radius: 4px;
+        box-sizing: border-box;
+        border: none;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.1),
+          rgba(255, 255, 255, 0)
+        );
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        color: white;
+        cursor: pointer;
+      }
+      option{
+        background-color: rgb(137, 43, 226);
+      }
+      ::placeholder {
+        color: white;
+      }
+
+      .form_content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        padding: 35px;
+        gap: 29px;
+      }
+      .sc_icons {
+        display: flex;
+        color: white;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+      }
+      .sc_icons a i {
+        font-size: 24px;
+        position: fixed;
+        cursor: pointer;
+      }
+      .sc_icons a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        background-color: rgba(137, 43, 226, 0.386);
+      }
+      .sc_icons a:hover {
+        background-color: blueviolet;
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+      }
+      .sepration {
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        width: 238px;
+        position: relative;
+        top: -20px;
+      }
+      .box .square {
+        position: absolute;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.1),
+          rgba(255, 255, 255, 0)
+        );
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 6px;
+        animation: animate 10s linear infinite;
+        animation-delay: calc(-1s * var(--i));
+      }
+      @keyframes animate {
+        0%,
+        100% {
+          transform: translateY(-40px);
         }
-        form {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
-            width: 300px;
+        50% {
+          transform: translateY(40px);
         }
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        select, input[type="submit"] {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-            box-sizing: border-box;
-        }
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            cursor: pointer;
-        }
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
+      }
+      .box .square:nth-child(1) {
+        width: 85px;
+        height: 100px;
+        left: 343px;
+        bottom: 75px;
+      }
+      .box .square:nth-child(2) {
+        width: 137px;
+        height: 114px;
+        left: 201px;
+        top: 142px;
+      }
+      .box .square:nth-child(3) {
+        width: 85px;
+        height: 100px;
+        right: 343px;
+        top: 60px;
+      }
+      .box .square:nth-child(4) {
+        width: 107px;
+        height: 138px;
+        right: 254px;
+        bottom: 79px;
+      }
+      .box .square:nth-child(5) {
+        width: 81px;
+        height: 66px;
+        right: 573px;
+        top: 196px;
+      }
     </style>
-</head>
-<body>
-    <form action="/select_class" method="post">
-        <h1>Select the class you will attend now</h1>
-        <select name="classes" required>
-            <option value="">Select a class</option>
-            <option value="CS">Introduction to Computer Science</option>
-            <option value="Robotics">Introduction to Robotics</option>
-            <option value="Data">Data Structures</option>
-            <option value="Algorithms">Algorithms</option>
-            <option value="AI">Artificial Intelligence</option>
-            <option value="ML">Machine Learning</option>
-            <option value="DL">Deep Learning</option>
-            <option value="CV">Computer Vision</option>
-            <option value="NLP">Natural Language Processing</option>
-            <option value="BD">Big Data</option>
-            <option value="DS">Data Science</option>
-        </select>
-        <input type="submit" value="Submit">
+  </head>
+  <body>
+    <div class="box">
+        <div class="square" style="--i: 0"></div>
+        <div class="square" style="--i: 1"></div>
+        <div class="square" style="--i: 2"></div>
+        <div class="square" style="--i: 3"></div>
+        <div class="square" style="--i: 4"></div>
+        <div class="square" style="--i: 5"></div>
+      </div>
+    <form class ="form_content" action="/select_class" method="post" data-tilt>
+      <span>Select your Department</span>
+      <div class="sepration"></div>
+      <select name="classes" required>
+        <option value="">Departments</option>
+        <option value="CS">Engineering</option>
+        <option value="Robotics">Product management</option>
+        <option value="Data">UI-UX</option>
+        <option value="Algorithms">Quality Testing</option>
+        <option value="AI">Sales</option>
+        <option value="ML">Marketing</option>
+        <option value="DL">Customer Support</option>
+        <option value="CV">Operations</option>
+        <option value="NLP">Human Resources</option>
+        <option value="BD">Finance</option>
+        <option value="DS">Research and Development</option>
+      </select>
+      <input type="submit" value="Submit" />
+      <div class="sc_icons">
+        <a><i class="bx bxl-facebook"></i></a>
+        <a><i class="bx bxl-twitter"></i></a>
+        <a><i class="bx bxl-linkedin"></i></a>
+      </div>
     </form>
-</body>
+    <script src="../static/vanilla-tilt.js"></script>
+  </body>
 </html>

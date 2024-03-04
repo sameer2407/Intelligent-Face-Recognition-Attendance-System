@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Image</title>
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+    * {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --body-color: #e4e9f7;
+      --sidebar-color: #fff;
+      --primary-color: #695cfe;
+      --primary-color1: #0e4bf1;
+      --primary-color-light: #f6f5ff;
+      --toogle-color: #ddd;
+      --text-color: black;
+      --box1-color: #4da3ff;
+      --box2-color: #ffe6ac;
+      --box3-color: #e7d1fc;
+    }
+
+    body {
+      height: 100vh;
+      background: var(--body-color);
+      transition: all 0.2s ease;
+    }
+
+    body.dark {
+      --body-color: #18191a;
+      --sidebar-color: #242526;
+      --primary-color: #3a3b3c;
+      --primary-color1: #3a3b3c;
+      --primary-color-light: #3a3b3c;
+      --toogle-color: #fff;
+      --text-color: #ccc;
+      --box1-color: #3a3b3c;
+      --box2-color: #3a3b3c;
+      --box3-color: #3a3b3c;
+    }
+
+    .sidebar {
+      position: fixed;
+      height: 100%;
+      width: 250px;
+      background: var(--sidebar-color);
+      top: 0;
+      left: 0;
+      padding: 10px 14px;
+      transition: all 0.5s ease;
+      z-index: 100;
+    }
+    .sidebar header {
+      position: relative;
+    }
+    .sidebar.close {
+      width: 88px;
+    }
+    .sidebar.close .text {
+      opacity: 0;
+    }
+    /*.header{
+	position:relative;
+}*/
+
+    .sidebar p {
+      font-size: 16px;
+      font-weight: 500;
+      text-align: center;
+      color: var(--text-color);
+    }
+
+    .sidebar .toggle {
+      position: absolute;
+      top: 50%;
+      right: -25px;
+      transform: translateY(-50%) rotate(180deg);
+      height: 25px;
+      width: 25px;
+      background: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 20px;
+      transition: all 0.3 ease;
+    }
+    .sidebar.close header .toggle {
+      transform: translateY(-50%);
+    }
+    .sidebar li {
+      display: flex;
+      height: 50px;
+      align-items: center;
+      margin-top: 10px;
+      list-style: none;
+    }
+
+    .sidebar li .icon {
+      display: flex;
+      font-size: 20px;
+      min-width: 60px;
+      color: var(--text-color);
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    li .text {
+      color: var(--text-color);
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      opacity: 1;
+    }
+
+    .menu .searchbox {
+      background: var(--primary-color-light);
+      border-radius: 6px;
+    }
+
+    .searchbox input {
+      width: 100%;
+      height: 100%;
+      border: none;
+      outline: none;
+      border-radius: 6px;
+      background: var(--primary-color-light);
+      border-radius: 6px;
+    }
+    .sidebar li a {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      border-radius: 6px;
+      transition: all 0.4s ease;
+    }
+    .sidebar li a:hover {
+      background: var(--primary-color);
+    }
+    .sidebar li a:hover .icon {
+      color: #fff;
+    }
+
+    .sidebar li a:hover span {
+      color: #fff;
+    }
+
+    .sidebar .menu-bar {
+      height: calc(100% - 50px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .menu-bar .mode {
+      position: relative;
+      border-radius: 6px;
+      background: var(--primary-color-light);
+    }
+
+    .menu-bar .mode .moon-sun {
+      height: 50px;
+      width: 60px;
+      display: flex;
+      align-items: center;
+    }
+
+    .menu-bar .mode i {
+      position: absolute;
+      transition: all 0.3s ease;
+    }
+
+    .menu-bar .mode i.sun {
+      opacity: 0;
+    }
+
+    body.dark .menu-bar .mode i.sun {
+      opacity: 1;
+    }
+    body.dark .menu-bar .mode i.moon {
+      opacity: 0;
+    }
+
+    .menu-bar .mode .toggle-switch {
+      position: absolute;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      min-width: 60px;
+      background: var(--primary-color-light);
+    }
+
+    .toggle-switch .switch {
+      position: relative;
+      height: 22px;
+      width: 44px;
+      border-radius: 25px;
+      background: var(--toogle-color);
+    }
+
+    .switch::before {
+      content: "";
+      position: absolute;
+      height: 15px;
+      width: 15px;
+      border-radius: 50%;
+      top: 50%;
+      left: 5px;
+      transform: translateY(-50%);
+      background: var(--sidebar-color);
+      transition: all 0.3s ease;
+    }
+
+    body.dark .switch::before {
+      left: 24px;
+    }
+
+    .dashboard {
+      position: relative;
+      height: 100vh;
+      background: var(--body-color);
+      left: 250px;
+      width: calc(100% - 250px);
+      transition: all 0.5s ease;
+      padding: 10px 14px;
+    }
+    .sidebar.close ~ .dashboard {
+      left: 88px;
+      width: calc(100% - 88px);
+    }
+    .dashboard .dash-content {
+      min-height: 80vh;
+    }
+
+    .dash-content .title {
+      display: flex;
+      align-items: center;
+      margin: 70px 0 30px 0;
+    }
+
+    .dash-content .title i {
+      position: relative;
+      height: 35px;
+      width: 35px;
+      background: var(--primary-color1);
+      border-radius: 6px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    .dash-content .title .text {
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--text-color);
+      margin-left: 10px;
+    }
+    .video-container {
+      width: 50%;
+      height: 100%;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    .video-container img {
+      width: 100%;
+      height: 100%;
+    }
+    .video-container :nth-child(2) {
+      width: 84%;
+      height: 291px;
+      position: absolute;
+      top: 70px;
+      left: 51px;
+      border: none;
+      background-color: transparent;
+      transition: all 0.5s ease;
+    }
+    .sidebar.close ~ .dashboard .video-container :nth-child(2) {
+      height: 327px;
+      top: 80px;
+      left: 58px;
+    }
+    #capture-button {
+      border-radius: 50%;
+      height: 40px;
+      width: 40px;
+      background-color: black;
+      border: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      bottom: 185px;
+      right: 75px;
+      transition: all 0.5s ease;
+    }
+    .sidebar.close ~ .dashboard .video-container #capture-button {
+      bottom: 212px;
+    }
+    button i {
+      color: white;
+      font-size: 25px;
+    }
+    .upbtn {
+      background-color: var(--primary-color1);
+      border: none;
+      color: white;
+      font-size: 19px;
+      font-weight: 500;
+    }
+    .up_set {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--primary-color1);
+      border-radius: 6px;
+      padding: 10px 41px;
+      color: white;
+      border: none;
+      gap: 6px;
+      margin-top: 20px;
+    }
+    .up_card {
+      height: 300px;
+      width: 300px;
+      display: flex;
+      position: relative;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: auto;
+      border-radius: 50px;
+      background-color: white;
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    }
+    .up_card span {
+      font-size: 15px;
+    }
+    .file_up {
+      width: 32px;
+      height: 32px;
+      background-color: transparent;
+      position: absolute;
+      text-align: center;
+      line-height: 33px;
+      top: 90px;
+      left: 155px;
+      overflow: hidden;
+    }
+    .up_card img {
+      height: 80px;
+    }
+    .up_card input[type="file"] {
+      background-color: blue;
+      position: absolute;
+      transform: scale(2);
+      opacity: 0;
+    }
+    .top {
+      display: flex;
+      justify-content: flex-end;
+      padding: 10px 43px;
+    }
+    .top img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+    .dash-content form {
+      margin-top: 80px;
+    }
+  </style>
+  <body>
+    <nav class="sidebar close">
+      <header>
+        <p class="text">ZETA DIVISION</p>
+        <i class="bx bx-chevron-right toggle"></i>
+      </header>
+      <div class="menu-bar">
+        <div class="menu">
+          <!-- <ul class="menu-links"> -->
+          <li class="searchbox">
+            <i class="bx bx-search icon"></i>
+            <input type="search" placeholder="Search..." />
+          </li>
+          <li>
+            <a href="#">
+              <i class="bx bx-home-alt icon"></i>
+              <span onclick="window.location.href='/attendance'"class="text">Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="bx bx-bell icon"></i>
+              <span onclick="window.location.href='/image_upload'" class="text">Employee</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="bx bx-pie-chart icon"></i>
+              <span class="text">Analytics</span>
+            </a>
+          </li>
+          <!-- </ul> -->
+        </div>
+        <div class="bottom-content">
+          <li>
+            <a href="#">
+              <i class="bx bx-log-out icon"></i>
+              <span onclick="window.location.href='/teacher_login'" class="text">Logout</span>
+            </a>
+          </li>
+          <li class="mode">
+            <div class="moon-sun">
+              <i class="bx bx-moon icon moon"></i>
+              <i class="bx bx-sun icon sun"></i>
+            </div>
+            <span class="mode-text text">Dark Mode</span>
+            <div class="toggle-switch">
+              <span class="switch"></span>
+            </div>
+          </li>
+        </div>
+      </div>
+    </nav>
+    <section class="dashboard">
+      <div class="top">
+        <img src="../logo-profile.jpg" />
+      </div>
+      <div class="dash-content">
+        <div class="title">
+          <i class="bx bxs-webcam"></i>
+          <span class="text">Capture Image</span>
+        </div>
+        <div class="video-container">
+          <img src="../static/images/tv.png" />
+          <iframe id="video" src="/video_feed"></iframe>
+          <button id="capture-button"><i class="bx bx-play"></i></button>
+        </div>
+      </div>
+      <div class="dash-content">
+        <div class="title">
+          <i class="bx bx-image-add"></i>
+          <span class="text">Add Image</span>
+        </div>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+          <div class="up_card">
+            <img src="../static/images/up.svg" />
+            <div class="file_up">
+              <i class="bx bx-plus-medical"></i>
+              <input type="file" name="file" />
+            </div>
+            <div class="up_set">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="white"
+                class="bi bi-upload"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"
+                />
+                <path
+                  d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z"
+                />
+              </svg>
+              <input class="upbtn" type="submit" value="Upload" />
+            </div>
+            <span>or drop a file</span>
+          </div>
+        </form>
+      </div>
+    </section>
+  </body>
+  <script>
+    const body = document.querySelector("body"),
+      sidebar = body.querySelector(".sidebar"),
+      toggle = body.querySelector(".toggle"),
+      searchBtn = body.querySelector(".searchbox"),
+      modeSwitch = body.querySelector(".toggle-switch"),
+      modeText = body.querySelector(".mode-text");
+
+	  let getStatus = localStorage.getItem("status");
+    if (getStatus && getStatus === "close") sidebar.classList.toggle("close");
+
+    toggle.addEventListener("click", () => {
+      sidebar.classList.toggle("close");
+      if (sidebar.classList.contains("close")) {
+        localStorage.setItem("status", "close");
+      } else {
+        localStorage.setItem("status", "open");
+      }
+    });
+
+    let getMode = localStorage.getItem("mode");
+    if (getMode && getMode === "dark") body.classList.toggle("dark");
+
+    modeSwitch.addEventListener("click", () => {
+      body.classList.toggle("dark");
+
+      if (body.classList.contains("dark")) {
+        localStorage.setItem("mode", "dark");
+        modeText.innerText = "Light Mode";
+      } else {
+        localStorage.setItem("mode", "light");
+        modeText.innerText = "Dark Mode";
+      }
+    });
+  </script>
+<script>
+    document.getElementById('capture-button').addEventListener('click', function() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/capture', true);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                // Change the location of the window object to the success page
+                window.location.href = '/add_info';
+            }
+        };
+        xhr.send();
+    });
+</script>
+</html>

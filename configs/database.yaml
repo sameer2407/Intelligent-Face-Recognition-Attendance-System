@@ -1,6 +1,6 @@
 teacher:
-  password_hash: <enter-your-teacher-login-hash>
+  password_hash: pbkdf2:sha256:150000$5g511XAH$ec0f8b5ac772092aa5017c1ca84aeeada6fee8082109e56da2fcad0c0f1fb740
 firebase:
-  databaseURL: <enter-your-databaseURL>
-  storageBucket: <enter-your-storageBucket>
-  pathToServiceAccount: <enter-your-serviceAccountKey-path>
+  databaseURL: https://face-recog-2872b-default-rtdb.firebaseio.com/
+  storageBucket: face-recog-2872b.appspot.com
+  pathToServiceAccount: /home/sameer/Downloads/face-recog-2872b-firebase-adminsdk-p8hr4-992f993f7c.json

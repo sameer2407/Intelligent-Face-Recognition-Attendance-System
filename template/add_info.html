@@ -1,4 +1,460 @@
 <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Upload</title>
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+      * {
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --body-color: #e4e9f7;
+        --sidebar-color: #fff;
+        --primary-color: #695cfe;
+        --primary-color1: #0e4bf1;
+        --primary-color-light: #f6f5ff;
+        --toogle-color: #ddd;
+        --text-color: black;
+        --box1-color: #4da3ff;
+        --box2-color: #ffe6ac;
+        --box3-color: #e7d1fc;
+      }
+
+      body {
+        height: 100vh;
+        background: var(--body-color);
+        transition: all 0.2s ease;
+      }
+
+      body.dark {
+        --body-color: #18191a;
+        --sidebar-color: #242526;
+        --primary-color: #3a3b3c;
+        --primary-color1: #3a3b3c;
+        --primary-color-light: #3a3b3c;
+        --toogle-color: #fff;
+        --text-color: #ccc;
+        --box1-color: #3a3b3c;
+        --box2-color: #3a3b3c;
+        --box3-color: #3a3b3c;
+      }
+
+      .sidebar {
+        position: fixed;
+        height: 100%;
+        width: 250px;
+        background: var(--sidebar-color);
+        top: 0;
+        left: 0;
+        padding: 10px 14px;
+        transition: all 0.5s ease;
+        z-index: 100;
+      }
+      .sidebar header {
+        position: relative;
+      }
+      .sidebar.close {
+        width: 88px;
+      }
+      .sidebar.close .text {
+        opacity: 0;
+      }
+      /*.header{
+	position:relative;
+}*/
+
+      .sidebar p {
+        font-size: 16px;
+        font-weight: 500;
+        text-align: center;
+        color: var(--text-color);
+      }
+
+      .sidebar .toggle {
+        position: absolute;
+        top: 50%;
+        right: -25px;
+        transform: translateY(-50%) rotate(180deg);
+        height: 25px;
+        width: 25px;
+        background: var(--primary-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        color: #fff;
+        font-size: 20px;
+        transition: all 0.3 ease;
+      }
+      .sidebar.close header .toggle {
+        transform: translateY(-50%);
+      }
+      .sidebar li {
+        display: flex;
+        height: 50px;
+        align-items: center;
+        margin-top: 10px;
+        list-style: none;
+      }
+
+      .sidebar li .icon {
+        display: flex;
+        font-size: 20px;
+        min-width: 60px;
+        color: var(--text-color);
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+
+      li .text {
+        color: var(--text-color);
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        opacity: 1;
+      }
+
+      .menu .searchbox {
+        background: var(--primary-color-light);
+        border-radius: 6px;
+      }
+
+      .searchbox input {
+        width: 100%;
+        height: 100%;
+        border: none;
+        outline: none;
+        border-radius: 6px;
+        background: var(--primary-color-light);
+        border-radius: 6px;
+      }
+      .sidebar li a {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        border-radius: 6px;
+        transition: all 0.4s ease;
+      }
+      .sidebar li a:hover {
+        background: var(--primary-color);
+      }
+      .sidebar li a:hover .icon {
+        color: #fff;
+      }
+
+      .sidebar li a:hover span {
+        color: #fff;
+      }
+
+      .sidebar .menu-bar {
+        height: calc(100% - 50px);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .menu-bar .mode {
+        position: relative;
+        border-radius: 6px;
+        background: var(--primary-color-light);
+      }
+
+      .menu-bar .mode .moon-sun {
+        height: 50px;
+        width: 60px;
+        display: flex;
+        align-items: center;
+      }
+
+      .menu-bar .mode i {
+        position: absolute;
+        transition: all 0.3s ease;
+      }
+
+      .menu-bar .mode i.sun {
+        opacity: 0;
+      }
+
+      body.dark .menu-bar .mode i.sun {
+        opacity: 1;
+      }
+      body.dark .menu-bar .mode i.moon {
+        opacity: 0;
+      }
+
+      .menu-bar .mode .toggle-switch {
+        position: absolute;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        min-width: 60px;
+        background: var(--primary-color-light);
+      }
+
+      .toggle-switch .switch {
+        position: relative;
+        height: 22px;
+        width: 44px;
+        border-radius: 25px;
+        background: var(--toogle-color);
+      }
+
+      .switch::before {
+        content: "";
+        position: absolute;
+        height: 15px;
+        width: 15px;
+        border-radius: 50%;
+        top: 50%;
+        left: 5px;
+        transform: translateY(-50%);
+        background: var(--sidebar-color);
+        transition: all 0.3s ease;
+      }
+
+      body.dark .switch::before {
+        left: 24px;
+      }
+
+      .dashboard {
+        position: relative;
+        height: 100vh;
+        background: var(--body-color);
+        left: 250px;
+        width: calc(100% - 250px);
+        transition: all 0.5s ease;
+        padding: 10px 14px;
+      }
+      .sidebar.close ~ .dashboard {
+        left: 88px;
+        width: calc(100% - 88px);
+      }
+
+      .form_flex {
+        display: flex;
+        flex-direction: column;
+        gap: 35px;
+      }
+      .form_content {
+        width: 29vw;
+        height: 80vh;
+        border-radius: 20px;
+        background-color: white;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+      }
+      form input,
+      select {
+        padding: 8px;
+        font-size: 14px;
+        border: none;
+        width: 100%;
+      }
+      .form_card {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .form_flex > :nth-child(6) {
+        background-color: var(--primary-color);
+        border-radius: 6px;
+        border: none;
+        width: 82px;
+        padding: 8px 0px;
+        text-align: center;
+        margin: auto;
+		color: white;
+      }
+      .input_set {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 50px;
+      }
+      .form_icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+        height: 40px;
+        color: white;
+        font-size: 20px;
+        background-color: var(--primary-color);
+		    border-radius: 6px;
+      }
+	  ::placeholder{
+		color: var(--text-color);
+	  }
+    </style>
+  </head>
+  <body>
+    <nav class="sidebar close">
+      <header>
+        <p class="text">ZETA DIVISION</p>
+        <i class="bx bx-chevron-right toggle"></i>
+      </header>
+      <div class="menu-bar">
+        <div class="menu">
+          <!-- <ul class="menu-links"> -->
+          <li class="searchbox">
+            <i class="bx bx-search icon"></i>
+            <input type="search" placeholder="Search..." />
+          </li>
+          <li>
+            <a href="#">
+              <i class="bx bx-home-alt icon"></i>
+              <span onclick="window.location.href='/attendance'"class="text">Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="bx bx-bell icon"></i>
+              <span onclick="window.location.href='/image_upload'" class="text">Employee</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="bx bx-pie-chart icon"></i>
+              <span class="text">Analytics</span>
+            </a>
+          </li>
+          <!-- </ul> -->
+        </div>
+        <div class="bottom-content">
+          <li>
+            <a href="#">
+              <i class="bx bx-log-out icon"></i>
+              <span onclick="window.location.href='/teacher_login'" class="text">Logout</span>            </a>
+          </li>
+          <li class="mode">
+            <div class="moon-sun">
+              <i class="bx bx-moon icon moon"></i>
+              <i class="bx bx-sun icon sun"></i>
+            </div>
+            <span class="mode-text text">Dark Mode</span>
+            <div class="toggle-switch">
+              <span class="switch"></span>
+            </div>
+          </li>
+        </div>
+      </div>
+    </nav>
+    <section class="dashboard">
+      <div class="form_card">
+        <div class="form_content">
+          <form class="form_flex" action="/submit_info" method="post">
+            <div class="input_set">
+              <div class="form_icon">
+                <i class="bx bx-user"></i>
+              </div>
+              <input
+                type="text"
+                name="name"
+                placeholder="Enter your name"
+                required
+              />
+            </div>
+            <div class="input_set">
+              <div class="form_icon">
+                <i class="bx bxs-envelope"></i>
+              </div>
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+            <div class="input_set">
+              <div class="form_icon">
+                <i class="bx bx-user-pin"></i>
+              </div>
+              <select style ="padding-left: 0px;" name="userType" required>
+                <option value="">User type</option>
+                <option value="student">Employee</option>
+                <option value="teacher">Manager</option>
+              </select>
+            </div>
+            <div class="input_set">
+              <div class="form_icon">
+                <i class="bx bx-buildings"></i>
+              </div>
+              <select name="classes" multiple required>
+                <option value="">Departments</option>
+                <option value="CS">Engineering</option>
+                <option value="Robotics">Product Management</option>
+                <option value="Data">UI-UX</option>
+                <option value="Algorithms">Quality Testing</option>
+                <option value="AI">Sales</option>
+                <option value="ML">Marketing</option>
+                <option value="DL">Customer Support</option>
+                <option value="CV">Operations</option>
+                <option value="NLP">Human Resources</option>
+                <option value="BD">Finance</option>
+                <option value="DS">Research and Development</option>
+              </select>
+            </div>
+            <div class="input_set">
+              <div class="form_icon">
+                <i class="bx bx-lock"></i>
+              </div>
+              <input
+                type="password"
+                name="password"
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
+      </div>
+    </section>
+  </body>
+  <script>
+    const body = document.querySelector("body"),
+      sidebar = body.querySelector(".sidebar"),
+      toggle = body.querySelector(".toggle"),
+      searchBtn = body.querySelector(".searchbox"),
+      modeSwitch = body.querySelector(".toggle-switch"),
+      modeText = body.querySelector(".mode-text");
+
+    toggle.addEventListener("click", () => {
+      sidebar.classList.toggle("close");
+    });
+
+    modeSwitch.addEventListener("click", () => {
+      body.classList.toggle("dark");
+
+      if (body.classList.contains("dark")) {
+        modeText.innerText = "Light Mode";
+      } else {
+        modeText.innerText = "Dark Mode";
+      }
+    });
+  </script>
+</html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
     <title>Add Information</title>
@@ -71,4 +527,4 @@
         <input type="submit" value="Submit">
     </form>
 </body>
-</html>
+</html> -->

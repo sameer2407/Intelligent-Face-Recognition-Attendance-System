@@ -1,6 +1,511 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Attendance</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+	font-family: 'Poppins', sans-serif;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box; 
+}
+
+:root{
+   --body-color:#E4E9F7;
+   --sidebar-color:#FFF;
+   --primary-color:#695CFE;
+   --primary-color1:#0E4BF1;
+   --primary-color-light:#F6F5FF;
+   --toogle-color:#DDD;
+   --text-color:black;
+   --box1-color:#4DA3FF;
+   --box2-color:#FFE6AC;
+   --box3-color:#E7D1FC;
+}
+
+body{
+	height:100vh;
+	background: var(--body-color);
+	transition: all 0.2s ease;
+}
+
+body.dark{
+	--body-color:#18191A;
+   --sidebar-color:#242526;
+   --primary-color:#3A3B3C;
+   --primary-color1:#3A3B3C;
+   --primary-color-light:#3A3B3C;;
+   --toogle-color:#FFF;
+   --text-color:#CCC;
+   --box1-color:#3A3B3C;
+   --box2-color:#3A3B3C;
+   --box3-color:#3A3B3C;
+
+}
+
+.sidebar{
+	position:fixed;
+	height:100%;
+	width:250px;
+	background: var(--sidebar-color);
+	top:0;
+	left:0;
+	padding: 10px 14px;
+	transition: all 0.5s ease;
+	z-index: 100;
+}
+.sidebar header{
+	position: relative;
+}
+.sidebar.close{
+	width: 88px
+}
+.sidebar.close .text{
+	opacity: 0;
+}
+/*.header{
+	position:relative;
+}*/
+
+.sidebar p{
+	font-size: 16px;
+	font-weight: 500;
+	text-align: center;
+	color: var(--text-color);
+}
+
+.sidebar .toggle{
+	position: absolute;
+	top: 50%;
+	right: -25px;
+	transform: translateY(-50%) rotate(180deg);
+	height: 25px;
+	width: 25px;
+	background:var(--primary-color);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	color: #FFF;
+	font-size: 20px;
+	transition: all 0.3 ease;
+}
+.sidebar.close header .toggle{
+	transform: translateY(-50%);
+	
+}
+.sidebar li {
+	display:flex;
+	height: 50px;
+	align-items: center;
+	margin-top: 10px;
+	list-style: none;
+}
+
+.sidebar li .icon{
+	display: flex;
+	font-size: 20px;
+	min-width: 60px;
+	color:var(--text-color);
+	align-items: center;
+	justify-content: center;
+	transition: all 0.2s ease;
+}
+
+ li .text{
+    color: var(--text-color);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    opacity: 1;
+}
+
+.menu .searchbox{
+    background: var(--primary-color-light);
+    border-radius: 6px;
+}
+
+.searchbox input{
+	 width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    background: var(--primary-color-light);
+    border-radius: 6px;
+}
+.sidebar li a{
+	text-decoration: none;
+	display: flex;
+	align-items: center;
+	height: 100%;
+	width: 100%;
+	border-radius: 6px;
+	transition:all 0.4s ease;
+}
+.sidebar li a:hover{
+	background:var(--primary-color) ;
+}
+.sidebar li a:hover .icon{
+	color:#FFF ;
+}
+
+.sidebar li a:hover span{
+	color:#FFF ;
+}
+
+.sidebar .menu-bar{
+	height: calc(100% - 50px);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.menu-bar .mode{
+	position: relative;
+	border-radius: 6px;
+	background: var(--primary-color-light);
+}
+
+.menu-bar .mode .moon-sun{
+	height: 50px;
+	width: 60px;
+	display: flex;
+	align-items: center;
+}
+
+.menu-bar .mode i{ 
+	position: absolute;
+	transition: all 0.3s ease;
+}
+
+.menu-bar .mode i.sun{
+	opacity: 0;
+}
+
+body.dark .menu-bar .mode i.sun{
+	opacity: 1;
+}
+body.dark .menu-bar .mode i.moon{
+	opacity: 0;
+}
+
+.menu-bar .mode .toggle-switch{
+	position: absolute;
+	right: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	min-width: 60px;
+	background: var(--primary-color-light);
+}
+
+.toggle-switch .switch{
+	position: relative;
+	height: 22px;
+	width: 44px;
+	border-radius: 25px;
+	background: var(--toogle-color);
+
+}
+
+.switch::before{
+	content: '';
+	position: absolute;
+	height: 15px;
+	width: 15px;
+	border-radius: 50%;
+	top: 50%;
+	left: 5px;
+	transform: translateY(-50%);
+	background: var(--sidebar-color);
+   transition: all 0.3s ease;
+}
+
+body.dark .switch::before{
+	left: 24px;
+}
+
+.dashboard{
+	position: relative;
+	height: 100vh;
+	background: var(--body-color);
+	left: 250px;
+	width: calc(100% - 250px);
+	transition: all 0.5s ease;
+	padding: 10px 14px;
+}
+.sidebar.close ~ .dashboard{
+   left: 88px;
+	width: calc(100% - 88px);
+}
+.top img{
+   width: 50px;
+   height: 50px;
+   border-radius: 50%;
+   
+}
+.dashboard .dash-content{
+	padding-top:50px ;
+}
+
+.dash-content .title{
+	display: flex;
+	align-items: center;
+	margin: 70px 0 30px 0;
+}
+
+.dash-content .title i{
+	position: relative;
+	height: 35px;
+	width: 35px;
+	background: var(--primary-color1);
+	border-radius: 6px;
+	color: #FFF;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 24px;
+
+}
+.dash-content .title .text{
+	font-size: 24px;
+	font-weight: 500;
+	color: var(--text-color);
+	margin-left: 10px;
+}
+.dash-content .boxes{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.dash-content .boxes .box{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 12px;
+	width: calc(100% / 3 - 15px);
+	padding: 15px 20px;
+	background-color: var(--box1-color);
+}
+.boxes .box i{
+	font-size: 35px;
+	color: var(--text-color);
+}
+.boxes .box .text{
+	white-space: nowrap;
+	font-size: 12 px;
+	font-weight: 500;
+	color: var(--text-color);
+}
+.boxes .box .number{
+	font-size: 40px;
+	font-weight: 500;
+	color: var(--text-color);
+}
+.boxes .box.box2{
+	background-color: var(--box2-color);
+}
+
+.boxes .box.box3{
+	background-color: var(--box3-color);
+}
+tr{
+    width: 100%;
+}
+th{
+    width: calc(100% / 4);
+    font-size: 20px;
+    font-weight: 500;
+    padding: 20px 0px;
+    color: var(--text-color);
+}
+td{
+    font-size: 18px;
+    font-weight: 400;
+    margin-top: 20px;
+    text-align: center;
+    padding: 20px 0px;
+    color: var(--text-color);
+}
+.top{
+	display: flex;
+	justify-content: flex-end;
+	padding: 10px 43px;
+}
+    </style>
+</head>
+<body>
+    <nav class="sidebar close"> 
+		<header>
+		<p class="text">ZETA DIVISION</p>
+		<i class='bx bx-chevron-right toggle'></i>
+	    </header>
+	    <div class="menu-bar">
+	    <div class="menu">
+	    	<!-- <ul class="menu-links"> -->
+	    		<li class="searchbox">
+	    				<i class='bx bx-search icon' ></i>
+                        <input type="search" placeholder="Search...">
+	    		</li> 
+	    		<li>
+	    			<a href="#">
+	    				<i class='bx bx-home-alt icon' ></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+	    		</li>
+	    		<li>
+	    			<a href="#">
+	    				<i class='bx bx-bell icon' ></i>
+                        <span onclick="window.location.href='/image_upload'" class="text">Employee</span>
+                    </a>
+	    		</li>
+	    		<li>
+	    			<a href="#">
+	    				<i class='bx bx-pie-chart icon' ></i>
+                        <span class="text">Analytics</span>
+                    </a>
+	    		</li>
+	        <!-- </ul> -->
+        </div>
+	    		<div class="bottom-content">
+	    		<li>
+	    			<a href="#">
+	    				<i class='bx bx-log-out icon' ></i>
+                        <span onclick="window.location.href='/teacher_login'" class="text">Logout</span>
+                    </a>
+	    		</li>
+	    		<li class="mode">
+	    			<div class="moon-sun">
+	    				<i class='bx bx-moon icon moon' ></i>
+	    				<i class='bx bx-sun icon sun' ></i>
+	    			</div>
+                        <span class="mode-text text">Dark Mode</span>
+                        <div class="toggle-switch">
+                        	<span class="switch"></span>
+                        	
+                        </div>
+	    		</li>
+	    	    </div>
+	    	</div>
+	    </nav>
+	    <section class="dashboard">
+	    	<div class="top">
+	    		<img src="../static/images/logo-profile.jpg">
+	    	</div>	
+	    	<div class="dash-content">
+	    		<div class="overview">
+	    			<div class="title">
+                        <i class='bx bx-tachometer' ></i>
+	    				<span class="text">Dashboard</span>	
+	    			</div>
+	    			<div class="boxes">
+	    		         <div class="box box1">
+	    		         	<i class="bx bx-building"></i>
+	    		         	<span class="text">Departments</span>
+	    		         	<span class="number">8</span>
+	    			
+	    		         </div>
+	    		         <div class="box box2">
+	    		         	<i class="bx bx-stopwatch"></i>
+	    		         	<span class="text">Working Shifts</span>
+	    		         	<span class="number">6</span>
+	    			
+	    		         </div>
+	    		         <div class="box box3">
+	    		         	<i class="bx bx-group"></i>
+	    		         	<span class="text">Employees</span>
+	    		         	<span class="number">100</span>
+	    			
+	    		         </div>
+	    	        </div>
+	    		</div>
+	    	</div>
+            <div class="dash-content">
+                <div class="title">
+                    <i class="bx bx-time"></i>
+                    <span class="text">Attendance Data</span>
+                </div>
+            </div>           
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Type</th>
+            <th>Attendance</th>
+        </tr>
+        {% for student in students.values() %}
+            <tr>
+                <td>{{ student[0] }}</td>
+                <td>{{ student[1] }}</td>
+                <td>{{ student[2] }}</td>
+                <td>
+                    {% for class_, attendance in student[3].items() %}
+                        {{ class_ }}: {{ attendance }}<br>
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+	    </section>
+</body>
+<script>
+    const body = document.querySelector("body"),
+      sidebar = body.querySelector(".sidebar"),
+      toggle = body.querySelector(".toggle"),
+      searchBtn = body.querySelector(".searchbox"),
+      modeSwitch = body.querySelector(".toggle-switch"),
+      modeText = body.querySelector(".mode-text");
+
+	  let getStatus = localStorage.getItem("status");
+    if (getStatus && getStatus === "close") sidebar.classList.toggle("close");
+
+    toggle.addEventListener("click", () => {
+      sidebar.classList.toggle("close");
+      if (sidebar.classList.contains("close")) {
+        localStorage.setItem("status", "close");
+      } else {
+        localStorage.setItem("status", "open");
+      }
+    });
+
+    let getMode = localStorage.getItem("mode");
+    if (getMode && getMode === "dark") body.classList.toggle("dark");
+
+    modeSwitch.addEventListener("click", () => {
+      body.classList.toggle("dark");
+
+      if (body.classList.contains("dark")) {
+        localStorage.setItem("mode", "dark");
+        modeText.innerText = "Light Mode";
+      } else {
+        localStorage.setItem("mode", "light");
+        modeText.innerText = "Dark Mode";
+      }
+    });
+  </script>
+<script>
+	document.getElementById('recognize-button').addEventListener('click', function() {
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', '/recognize', true);
+		xhr.onload = function() {
+			if (xhr.status === 200) {
+				// Redirect to the select class page
+				window.location.href = '/back';
+			}
+		};
+		xhr.send();
+	});
+
+</script>  
+</html>
+<!-- <!DOCTYPE html>
+<html>
+<head>
     <title>Attendance</title>
     <style>
         body {
@@ -63,4 +568,4 @@
         {% endfor %}
     </table>
 </body>
-</html>
+</html> -->

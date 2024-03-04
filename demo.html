@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Face Recognition</title>
+    <style>
+       *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+       }
+       #header{
+        display: flex;
+       }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <img src="https://github.com/turhancan97/Intelligent-Face-Recognition-Attendance-System/assets/22428774/bb426a99-bd13-410d-a21c-e402850af561" alt="Logo">
+        <h1>Welcome to our Face Detection System for our University Attendance System</h1>
+    </div>
+
+    <div id="left-column">
+        <h2>Upload a new face as image</h2>
+        <h3>Click the button below to upload a new face as image</h3>
+        <p>NOTE: This will only work if you are not in our database</p>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="file">
+            <input type="submit" value="Upload">
+        </form>
+        <h2>Add yourself to the attendance list</h2>
+        <h3>Click the button below to recognize your face from the database</h3>
+        <p>NOTE: This will only work if you have already captured a face from the camera</p>
+        <button id="recognize-button">Take Attendance</button>
+        <p>NOTE: If you are a teacher, please click the button below to login to check attendance</p>
+        <button onclick="window.location.href='/teacher_login'">Teacher Login</button>
+    </div>
+    
+    <div id="right-column">
+        <h2>Capture a new face from Camera</h2>
+        <h3>Click the button below to capture a new face from the camera</h3>
+        <p>NOTE: This will only work if you are not in our database</p>
+        <button id="capture-button">Capture</button>
+        <div class="video-container">
+            <iframe id="video" src="/video_feed"></iframe>
+        </div>
+    </div>
+
+    <div id="footer">
+        <p>Project by: Turhan Can Kargın</p>
+        <p>Powered by: Python, Flask, OpenCV, Firebase</p>
+    </div>
+
+    <script>
+        document.getElementById('recognize-button').addEventListener('click', function() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/recognize', true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Redirect to the select class page
+                    window.location.href = '/select_class';
+                }
+            };
+            xhr.send();
+        });
+
+    </script>    
+
+    <script>
+        document.getElementById('capture-button').addEventListener('click', function() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/capture', true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Change the location of the window object to the success page
+                    window.location.href = '/add_info';
+                }
+            };
+            xhr.send();
+        });
+    </script>
+</body>
+</html>
